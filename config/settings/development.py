@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from .base import *
 
 # Quick-start development settings - unsuitable for production
@@ -30,4 +32,26 @@ DATABASES = {
         'HOST': 'db',
         'PORT': '5432',
     }
+}
+
+REST_FRAMEWORK = {
+    # 認証が必要
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    # JWT認証
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ]
+}
+
+SIMPLE_JWT = {
+    # アクセストークン(1時間)
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    # リフレッシュトークン(3日)
+    'REFRESH_TOKEN_LIFETIE': timedelta(days=3),
+    # 認証タイプ
+    'AUTH_HEADER_TYPES': ('JWT', ),
+    # 認証トークン
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken', )
 }
