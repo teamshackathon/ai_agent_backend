@@ -1,0 +1,9 @@
+# secret
+**/*secret*
+
+**/*.log
+**/__pycache__
+.ruff_cache
+
+static
+media/
