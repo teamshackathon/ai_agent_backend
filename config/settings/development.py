@@ -27,7 +27,7 @@ DATABASES = {
         'NAME': 'manabiyaai_development',
         'USER': 'user',
         'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
