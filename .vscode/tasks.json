@@ -4,7 +4,70 @@
         {
             "label": "コードの整形",
             "type": "shell",
-            "command": "ruff check ./ --fix",
+            "command": "docker compose exec api ruff check ./ --fix",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "マイグレーションファイルの作成",
+            "type": "shell",
+            "command": "docker compose exec api python manage.py makemigrations",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "マイグレーションの実行",
+            "type": "shell",
+            "command": "docker compose exec api python manage.py migrate",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "初期データの読み込み",
+            "type": "shell",
+            "command": "docker compose exec api bash ./load_all_fixtures.sh",            
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "新しいアプリケーションの作成",
+            "type": "shell",
+            "command": "docker compose exec api django-admin startapp --template=custom_app_template ${input:app_name}",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "初期データの作成",
+            "type": "shell",
+            "command": "docker compose exec api python -Xutf8 manage.py dumpdata ${input:app}.${input:model} --format=json --indent=4 > ${input:app}/fixtures/${input:file_name}.json",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "テストの実行",
+            "type": "shell",
+            "command": "docker compose exec api python manage.py test --keepdb",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "Dockerの起動",
+            "type": "shell",
+            "command": "docker compose up -d",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "Dockerの停止",
+            "type": "shell",
+            "command": "docker compose down",
+            "args": [],
+            "problemMatcher": [],
+        },
+        {
+            "label": "Dockerの完全削除",
+            "type": "shell",
+            "command": "docker compose down --rmi all -v",
             "args": [],
             "problemMatcher": [],
         },
@@ -57,6 +120,30 @@
             "id": "branch",
             "description": "ブランチ名を入力してください。",
             "default": ""
-        }
+        },
+        {
+            "type": "promptString",
+            "id": "app_name",
+            "description": "新しいアプリケーションの名前を入力してください。(英数字)",
+            "default": ""
+        },
+        {
+            "type": "promptString",
+            "id": "app",
+            "description": "初期データを作成したいアプリケーションの名前を入力してください。",
+            "default": ""
+        },
+        {
+            "type": "promptString",
+            "id": "model",
+            "description": "モデルの名前を入力してください。",
+            "default": ""
+        },
+        {
+            "type": "promptString",
+            "id": "file_name",
+            "description": "ファイル名をを入力してください。",
+            "default": ""
+        },
     ]
 }
